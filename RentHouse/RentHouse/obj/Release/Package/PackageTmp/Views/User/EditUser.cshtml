@@ -1,0 +1,134 @@
+﻿@model Comment.Model.User_Info
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编辑用户</title>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/xamin/font.css" rel="stylesheet" />
+    <link href="~/Content/xamin/xadmin.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <script src="~/Scripts/xadmin/xadmin.js"></script>
+    <script src="~/Scripts/xadmin/cookie.js"></script>
+    <script src="~/Scripts/user/respond.min.js"></script>
+    <script src="~/Scripts/user/html5.min.js"></script>
+    <style>
+        .hidden{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="x-body">
+        @if (Model != null)
+        {
+        <form class="layui-form">
+
+            <div class="layui-form-item">
+                <label for="phone" class="layui-form-label">
+                    姓名
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="UserId" value="@Model.UserId" name="UserId" class="layui-input hidden">
+                    <input type="text" id="UserName" value="@Model.UserName" name="UserName" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="phone" class="layui-form-label">
+                    手机
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="Phone" value="@Model.Phone" name="Phone" required="" lay-verify="phone" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>将会成为您唯一的登入名
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    邮箱
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_email" value="@Model.Email" name="Email" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red"></span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="Sex" class="layui-form-label">
+                    性别
+                </label>
+                <div class="layui-input-block">
+                    <input type="radio" name="Sex" value="False" title="男" checked="">
+                    <input type="radio" name="Sex" value="True" title="女">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">出生日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="Birthday" id="date" placeholder="出生日期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label">
+                </label>
+                <button class="layui-btn" lay-filter="add" lay-submit="">
+                    提交
+                </button>
+            </div>
+        </form>
+        }
+        else {
+            <div>用户不存在</div>
+        }
+    </div>
+    <script>
+        layui.use(['form', 'layer', 'laydate'], function(){
+            $ = layui.jquery;
+          var form = layui.form
+                , layer = layui.layer
+                , laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#date'
+            });
+   
+     //监听提交
+    form.on('submit(add)', function (data) {
+            $.ajax({
+                url: '../User/EditUserSubmit',
+                data: {
+                    user: data.field
+                },
+                type: 'post',
+                success: function (data) {
+                    if (data.Flag == true) {
+                        layer.alert(data.Message, { icon: 6 }, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                            // 可以对父窗口进行刷新
+                            x_admin_father_reload();
+                        });
+                    } else {
+                        layer.alert(data.Message, { icon: 5, skin: 'layer-ext-moon' });
+                    }
+                }
+            });
+            return false;
+          });
+        });
+    </script>
+</body>
+</html>

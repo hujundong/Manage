@@ -1,0 +1,219 @@
+﻿@model List<Comment.Model.User_Info>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>房东列表</title>
+    <link href="~/Content/xamin/font.css" rel="stylesheet" />
+    <link href="~/Content/xamin/xadmin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/layui/layui.js" charset="utf-8"></script>
+    <script src="~/Scripts/xadmin/xadmin.js"></script>
+    <script src="~/Scripts/xadmin/cookie.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">系统管理</a>
+            <a>
+                <cite>房东管理</cite>
+            </a>
+        </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="layui-icon" style="line-height:30px">ဂ</i>
+        </a>
+    </div>
+    <div class="x-body">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so">
+                <input class="layui-input" placeholder="开始日" name="start" id="start">
+                <input class="layui-input" placeholder="截止日" name="end" id="end">
+                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </form>
+        </div>
+        <xblock>
+            @*<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>*@
+            <button class="layui-btn" onclick="x_admin_show('添加用户','/user/adduser')"><i class="layui-icon"></i>添加</button>
+            <span class="x-right" style="line-height:40px">共有数据：@Model.Count() 条</span>
+        </xblock>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+                    </th>
+                    <th>ID</th>
+                    <th>登录名</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>手机</th>
+                    <th>邮箱</th>
+                    <th>出生日期</th>
+                    <th>加入时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+                    </td>
+                    <td>@item.UserId</td>
+                    <td>@item.LoginName</td>
+                    <td>@item.UserName</td>
+                    <td>@(item.Sex == true ? "女" : "男")</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Email</td>
+                    @{ 
+                        DateTime birthday = DateTime.Now;
+                        if (item.Birthday != null)
+                        {
+                            birthday = Convert.ToDateTime(item.Birthday);
+                        }
+                    }
+                    <td>@(item.Birthday==null?"":birthday.ToString("yyyy-MM-dd"))</td>
+                    <td>@item.CreateDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td class="td-status">
+                        <span class="layui-btn layui-btn-normal layui-btn-mini @(item.UserStatus?"":"layui-btn-disabled")">@(item.UserStatus?"启用":"停用")</span>
+                    </td>
+                    <td class="td-manage">
+                        <a onclick="member_stop(this,@item.UserId)" href="javascript:;" title="@(item.UserStatus?"停用":"启用")">
+                            @if (item.UserStatus)
+                            {
+                                <i class="layui-icon">&#xe62f;</i>
+                            }
+                            else
+                            {
+                                <i class="layui-icon">&#xe601;</i>
+
+                            }
+                        </a>
+                        <a title="编辑" onclick="x_admin_show('编辑','/user/edituser?userId=@item.UserId')" href="javascript:;">
+                            <i class="layui-icon">&#xe642;</i>
+                        </a>
+                        <a title="删除" onclick="member_del(this,@item.UserId)" href="javascript:;">
+                            <i class="layui-icon">&#xe640;</i>
+                        </a>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="page">
+            <div>
+                <a class="prev" href="">&lt;&lt;</a>
+                <a class="num" href="">1</a>
+                <span class="current">2</span>
+                <a class="num" href="">3</a>
+                <a class="num" href="">489</a>
+                <a class="next" href="">&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+    <script>layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+
+       /*用户-停用*/
+      function member_stop(obj,userId){
+          layer.confirm('确认要修改吗？', function (index) {
+              var status = true;
+              var message = "";
+              if ($(obj).attr('title') == '停用') {
+                  status = false;
+                $(obj).attr('title','启用')
+                $(obj).find('i').html('&#xe62f;');
+
+                  $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('停用');
+                  message = "已停用!";
+              } else {
+                status = true;
+                $(obj).attr('title','停用')
+                $(obj).find('i').html('&#xe601;');
+                  $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('启用');
+                  message = "已启用!";
+              }
+              //发异步把用户状态进行更改
+              $.ajax({
+                  url: '../User/UpdateUserStatus',
+                  data: {
+                      userId: userId,
+                      status: status
+                  },
+                  type: 'post',
+                  success: function (data) {
+                      if (data.Flag == true) {
+                          layer.msg(message, { icon: 6, time: 1000 });
+                      } else {
+                          layer.alert("修改失败!", { icon: 5, skin: 'layer-ext-moon' });
+                      }
+                  }
+              });
+
+          });
+      }
+
+      /*用户-删除*/
+      function member_del(obj,userId){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $.ajax({
+                  url: '../User/DeleteUser',
+                  data: {
+                      userId: userId
+                  },
+                  type: 'post',
+                  success: function (data) {
+                      if (data.Flag == true) {
+                          $(obj).parents("tr").remove();
+                          layer.msg('已删除!', { icon: 1, time: 1000 });
+                      } else {
+                          layer.alert(data.Message, { icon: 5, skin: 'layer-ext-moon' });
+                      }
+                  }
+              });
+             
+          });
+      }
+
+
+
+      function delAll (argument) {
+
+        var data = tableCheck.getData();
+
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+        }
+    </script>
+</body>
+</html>

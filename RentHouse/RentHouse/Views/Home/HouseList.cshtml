@@ -1,0 +1,200 @@
+﻿@model List<Comment.Model.House_Info>
+@using Comment.Model;
+@{
+    Layout = null;
+    int pages = ViewBag.pages;
+    int count = ViewBag.count;
+    int page = ViewBag.page;
+    House_Info house = ViewBag.house;
+}
+
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>房屋列表</title>
+    <link href="~/Content/xamin/font.css" rel="stylesheet" />
+    <link href="~/Content/xamin/xadmin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/layui/layui.js" charset="utf-8"></script>
+    <script src="~/Scripts/xadmin/xadmin.js"></script>
+    <script src="~/Scripts/xadmin/cookie.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">房屋管理</a>
+            <a>
+                <cite>房屋列表</cite>
+            </a>
+        </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="layui-icon" style="line-height:30px">ဂ</i>
+        </a>
+    </div>
+    <div class="x-body">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so">
+                @*<input class="layui-input" placeholder="开始日" name="start" id="start">
+                    <input class="layui-input" placeholder="截止日" name="end" id="end">*@
+                <input type="text" name="Community" placeholder="请输入小区名" value="@house.Community" autocomplete="off" class="layui-input">
+                <input name="delete" value="@ViewBag.delete" style="display:none" />
+                <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </form>
+        </div>
+        <xblock>
+            @*<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>*@
+            @if (ViewBag.delete==0){
+                <button class="layui-btn" onclick="x_admin_show('添加房屋','/home/addhouse')"><i class="layui-icon"></i>添加</button>
+            }
+            <span class="x-right" style="line-height:40px">共有数据：@Model.Count() 条</span>
+        </xblock>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+                    </th>
+                    <th>ID</th>
+                    <th>房东</th>
+                    <th>地区</th>
+                    <th>小区</th>
+                    <th>栋</th>
+                    <th>单元</th>
+                    <th>房号</th>
+                    <th>朝向</th>
+                    <td>户型</td>
+                    <th>面积</th>
+                    <th>装修程度</th>
+                    <th>月租</th>
+                    <th>状态</th>
+                    @if (ViewBag.delete == 0)
+                    {
+                        <th>操作</th>
+                    }
+</thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+                    </td>
+                    <td>@item.HouseId</td>
+                    <td>@item.LandlordName</td>
+                    <td>@item.AreaCode</td>
+                    <td>@item.Community</td>
+                    <td>@item.Building</td>
+                    <td>@item.Unit</td>
+                    <td>@item.RoomNumber</td>
+                    <td>@item.Toward</td>
+                    <td>@item.HouseType</td>
+                    <td>@item.AreaSize<span>m²</span></td>
+                    <td>@item.DegreeOfDecoration</td>
+                    <td>@item.MonthlyRcnt<span>元</span></td>
+                    <td class="td-status">
+                        <span class="layui-btn layui-btn-normal layui-btn-mini @(item.HouseStatus?"":"layui-btn-disabled")">@(item.HouseStatus ? "已租" : "未租")</span>
+                    </td>
+                    @if (ViewBag.delete == 0)
+                    {
+                        <td class="td-manage">
+                            <a title="编辑" onclick="x_admin_show('编辑','/home/edithouse?houseId=@item.HouseId')" href="javascript:;">
+                                <i class="layui-icon">&#xe642;</i>
+                            </a>
+                            <a title="删除" onclick="member_del(this,@item.HouseId)" href="javascript:;">
+                                <i class="layui-icon">&#xe640;</i>
+                            </a>
+                        </td>
+                    }
+
+                </tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="page">
+            <div>
+                <a class="page-prev prev">&lt;&lt;</a>
+                @for (int i = 1; i <= pages; i++)
+                {
+                    if (i == page)
+                    {
+                        <span class="current">@i</span>
+                    }
+                    else
+                    {
+                        <a class="page-num num" data-page="@i">@i</a>
+                    }
+                }
+                <a class="page-next next">&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+    <script>
+layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        });
+
+      /*用户-删除*/
+      function member_del(obj,houseId){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $.ajax({
+                  url: '../home/DeleteHouse',
+                  data: {
+                      houseId: houseId
+                  },
+                  type: 'post',
+                  success: function (data) {
+                      if (data.Flag == true) {
+                          $(obj).parents("tr").remove();
+                          layer.msg('已删除!', { icon: 1, time: 1000 });
+                      } else {
+                          layer.alert(data.Message, { icon: 5, skin: 'layer-ext-moon' });
+                      }
+                  }
+              });
+
+          });
+      }
+
+
+
+      function delAll (argument) {
+
+        var data = tableCheck.getData();
+
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+        }
+    </script>
+    <script>
+        var username = $("input[name=username]").val();
+        $(".page-num").click(function () {
+            var page = $(this).data("page");
+            location.href = "userlist?username=" + username + "&page=" + page;
+        })
+        $(".page-next").click(function () {
+            var page = Number('@page') + 1;
+            page = page > '@pages' ? '@pages' : page;
+            location.href = "userlist?username=" + username + "&page=" + page;
+        })
+        $(".page-prev").click(function () {
+            var page = Number('@page') - 1;
+            page = page < 1 ? 1 : page;
+            location.href = "userlist?username=" + username + "&page=" + page;
+        })
+    </script>
+</body>
+</html>

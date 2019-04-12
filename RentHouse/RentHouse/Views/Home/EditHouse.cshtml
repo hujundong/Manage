@@ -1,0 +1,226 @@
+﻿@model Comment.Model.House_Info
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>编辑房屋</title>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/xamin/font.css" rel="stylesheet" />
+    <link href="~/Content/xamin/xadmin.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+    <script src="~/Scripts/xadmin/xadmin.js"></script>
+    <script src="~/Scripts/xadmin/cookie.js"></script>
+    <script src="~/Scripts/user/respond.min.js"></script>
+    <script src="~/Scripts/user/html5.min.js"></script>
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .layui-input-inline input{
+            display:inline-block;
+            width:80%;
+        }
+        .layui-input-inline span{
+            margin-left:10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="x-body">
+        @if (Model != null)
+        {
+        <form class="layui-form">
+
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>地区
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="HouseId" value="@Model.HouseId" name="HouseId" class="layui-input hidden">
+                    <input type="text" id="AreaCode" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');"  name="AreaCode" value="@Model.AreaCode" required="" lay-verify="AreaCode" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>小区
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="Community" name="Community" value="@Model.Community" required="" lay-verify="Community" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>栋
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="Building" name="Building" value="@Model.Building" lay-verify="Building" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    单元
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="Unit" name="Unit" value="@Model.Unit" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>房号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="RoomNumber" name="RoomNumber" onkeyup = "value=value.replace(/[^\d]/g,'')" value="@Model.RoomNumber" lay-verify="RoomNumber" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    朝向
+                </label>
+                <div class="layui-input-block">
+                    <input type="radio" name="Toward" value="东" title="东" checked="">
+                    <input type="radio" name="Toward" value="南" title="南">
+                    <input type="radio" name="Toward" value="西" title="西">
+                    <input type="radio" name="Toward" value="北" title="北">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    户型
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="HouseType" name="HouseType" value="@Model.HouseType" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>面积
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="AreaSize" onkeyup = "value=value.replace(/[^\d]/g,'')" name="AreaSize" lay-verify="AreaSize" value="@Model.AreaSize" autocomplete="off" class="layui-input"><span>m²</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    装修程度
+                </label>
+                <div class="layui-input-block">
+                    <input type="radio" name="DegreeOfDecoration" value="毛坯房" title="毛坯房" checked="">
+                    <input type="radio" name="DegreeOfDecoration" value="简装修" title="简装修">
+                    <input type="radio" name="DegreeOfDecoration" value="精装修" title="精装修">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>月租
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="MonthlyRcnt" onkeyup = "value=value.replace(/[^\d]/g,'')" name="MonthlyRcnt" value="@Model.MonthlyRcnt" lay-verify="MonthlyRcnt" autocomplete="off" class="layui-input"><span>元</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label">
+                </label>
+                <button class="layui-btn" lay-filter="add" lay-submit="">
+                    提交
+                </button>
+            </div>
+        </form>
+        }
+        else
+        {
+            <div>房屋不存在</div>
+        }
+    </div>
+    <script>
+        layui.use(['form', 'layer', 'laydate'], function () {
+            $ = layui.jquery;
+            var form = layui.form
+                , layer = layui.layer
+                , laydate = layui.laydate;
+
+            //自定义验证规则
+            form.verify({
+                AreaCode: function (value) {
+                    if (value.length == 0) {
+                        return '地区必填';
+                    }
+                }
+                , Community: function (value) {
+                    if (value.length == 0) {
+                        return '小区必填';
+                    }
+                }
+                , Building: function (value) {
+                    if (value.length == 0) {
+                        return '栋必填';
+                    }
+                }
+                , RoomNumber: function (value) {
+                    if (value.length == 0) {
+                        return '房号必填';
+                    }
+                }
+                , AreaSize: function (value) {
+                    if (value.length == 0) {
+                        return '面积必填';
+                    }
+                }
+                , MonthlyRcnt: function (value) {
+                    if (value.length == 0) {
+                        return '月租必填';
+                    }
+                }
+            });
+            //监听提交
+            form.on('submit(add)', function (data) {
+                console.log(data);
+                $.ajax({
+                    url: '../home/EditHouseSubmit',
+                    data: {
+                        house: data.field
+                    },
+                    type: 'post',
+                    success: function (data) {
+                        if (data.Flag == true) {
+                            layer.alert(data.Message, { icon: 6 }, function () {
+                                // 获得frame索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                //关闭当前frame
+                                parent.layer.close(index);
+                                // 可以对父窗口进行刷新
+                                x_admin_father_reload();
+                            });
+                        } else {
+                            layer.alert(data.Message, { icon: 5, skin: 'layer-ext-moon' });
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            var DegreeOfDecoration = '@Model.DegreeOfDecoration';
+            if (DegreeOfDecoration != null && DegreeOfDecoration != "") {
+                $('input:radio[name=DegreeOfDecoration]:first').removeAttr("checked");
+                $("input:radio[name=DegreeOfDecoration][value="+DegreeOfDecoration+"]").attr("checked", true);  
+            }
+            var Toward = '@Model.Toward';
+            if (DegreeOfDecoration != null && DegreeOfDecoration != "") {
+                $('input:radio[name=Toward]:first').removeAttr("checked");
+                $("input:radio[name=Toward][value=" + Toward+"]").attr("checked", true);  
+            }
+        })
+    </script>
+</body>
+</html>

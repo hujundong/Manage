@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>自屋房屋租赁管理系统</title>
+    <link href="~/Content/admin/admin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/layui/lay/modules/layer.js"></script>
+</head>
+<body>
+
+    <div class="cotn_principal">
+        <div class="cont_centrar">
+            <div class="login-title">自屋房屋租赁管理系统</div>
+            <div class="cont_login">
+                <div class="cont_info_log_sign_up">
+                    <div class="col_md_login">
+                        <div class="cont_ba_opcitiy">
+                            <h2>LOGIN</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                            <button class="btn_login" onClick="cambiar_login()">登录</button>
+                        </div>
+                    </div>
+                    <div class="col_md_sign_up">
+                        <div class="cont_ba_opcitiy">
+                            <h2>SIGN UP</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                            <button class="btn_sign_up" onClick="cambiar_sign_up()">注册</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cont_back_info">
+                    <div class="cont_img_back_grey"> <img src="~/images/admin/po.jpg" alt="" /> </div>
+                </div>
+                <div class="cont_forms">
+                    <div class="cont_img_back_"> <img src="~/images/admin/po.jpg" alt="" /> </div>
+                    <div class="cont_form_login">
+                        <a href="#" onClick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+                        <h2>LOGIN</h2>
+                        <input type="text" name="loginname" placeholder="用户名/邮箱/手机号" />
+                        <input type="password" name="password" placeholder="密码" />
+                        <button class="btn_login" onClick="loginsubmit()">登录</button>
+                    </div>
+                    <div class="cont_form_sign_up">
+                        <a href="#" onClick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+                        <h2>SIGN UP</h2>
+                        <input type="text" name="username" placeholder="用户名（6-18位英文字母或数字）" />
+                        <input type="text" name="phone" placeholder="手机号" />
+                        <input type="password" name="regpass" placeholder="密码" />
+                        <input type="password" name="confirmpass" placeholder="确认密码" />
+                        <button class="btn_sign_up" onClick="register()">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/user/index.js"></script>
+</body>
+</html>
+

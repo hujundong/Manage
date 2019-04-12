@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RentHouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin_Info">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LoginName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdminStatus" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Area_Info">
+    <Key>
+      <PropertyRef Name="AreaId" />
+    </Key>
+    <Property Name="AreaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaCode" Type="varchar" MaxLength="50" />
+    <Property Name="AreaName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ParentId" Type="varchar" MaxLength="50" />
+    <Property Name="RootId" Type="varchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="House_Info">
+    <Key>
+      <PropertyRef Name="HouseId" />
+    </Key>
+    <Property Name="HouseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LandlordId" Type="int" Nullable="false" />
+    <Property Name="HouseName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HouseStatus" Type="bit" Nullable="false" />
+    <Property Name="AreaCode" Type="int" Nullable="false" />
+    <Property Name="Community" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Building" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Unit" Type="int" />
+    <Property Name="RoomNumber" Type="int" Nullable="false" />
+    <Property Name="Toward" Type="nvarchar" MaxLength="50" />
+    <Property Name="HouseType" Type="nvarchar" MaxLength="50" />
+    <Property Name="AreaSize" Type="int" Nullable="false" />
+    <Property Name="DegreeOfDecoration" Type="nvarchar" MaxLength="50" />
+    <Property Name="MonthlyRcnt" Type="float" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Tenants_Info">
+    <Key>
+      <PropertyRef Name="TenantsId" />
+    </Key>
+    <Property Name="TenantsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sex" Type="bit" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Birthday" Type="datetime" />
+    <Property Name="IDNum" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User_Info">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoginName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="300" />
+    <Property Name="Sex" Type="bit" />
+    <Property Name="Birthday" Type="datetime" />
+    <Property Name="IDNum" Type="varchar" MaxLength="50" />
+    <Property Name="UserStatus" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="RentHouseModelStoreContainer">
+    <EntitySet Name="Admin_Info" EntityType="Self.Admin_Info" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Area_Info" EntityType="Self.Area_Info" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="House_Info" EntityType="Self.House_Info" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tenants_Info" EntityType="Self.Tenants_Info" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Info" EntityType="Self.User_Info" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

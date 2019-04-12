@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RentHouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area_Info">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RootId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RootName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TwoAreaName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThreeAreaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PinYin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SortCode" Type="smallint" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Acronym" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Addtime" Type="datetime" Nullable="false" />
+          <Property Name="IsHot" Type="smallint" Nullable="false" />
+          <Property Name="raise" Type="smallint" />
+          <Property Name="enable" Type="smallint" />
+          <Property Name="alias" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="House_Info">
+          <Key>
+            <PropertyRef Name="HouseId" />
+          </Key>
+          <Property Name="HouseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LandlordName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HouseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="HouseStatus" Type="bit" Nullable="false" />
+          <Property Name="AreaCode" Type="int" Nullable="false" />
+          <Property Name="Community" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Building" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="RoomNumber" Type="int" Nullable="false" />
+          <Property Name="Toward" Type="nvarchar" MaxLength="50" />
+          <Property Name="HouseType" Type="nvarchar" MaxLength="50" />
+          <Property Name="AreaSize" Type="int" Nullable="false" />
+          <Property Name="DegreeOfDecoration" Type="nvarchar" MaxLength="50" />
+          <Property Name="MonthlyRcnt" Type="float" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="DeleteStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tenants_Info">
+          <Key>
+            <PropertyRef Name="TenantsId" />
+          </Key>
+          <Property Name="TenantsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="IDNum" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User_Info">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoginName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="300" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="IDNum" Type="varchar" MaxLength="50" />
+          <Property Name="UserStatus" Type="bit" Nullable="false" />
+          <Property Name="UserRole" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="RentHouseModelStoreContainer">
+          <EntitySet Name="Area_Info" EntityType="Self.Area_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="House_Info" EntityType="Self.House_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tenants_Info" EntityType="Self.Tenants_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Info" EntityType="Self.User_Info" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RentHouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User_Info">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Sex" Type="Boolean" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="IDNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatus" Type="Boolean" Nullable="false" />
+          <Property Name="UserRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="RentHouseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="User_Info" EntityType="Self.User_Info" />
+          <EntitySet Name="Tenants_Info" EntityType="RentHouseModel.Tenants_Info" />
+          <EntitySet Name="Area_Info" EntityType="RentHouseModel.Area_Info" />
+          <EntitySet Name="House_Info" EntityType="RentHouseModel.House_Info" />
+        </EntityContainer>
+        <EntityType Name="Tenants_Info">
+          <Key>
+            <PropertyRef Name="TenantsId" />
+          </Key>
+          <Property Name="TenantsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Boolean" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="IDNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Area_Info">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="RootId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RootName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TwoAreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThreeAreaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PinYin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SortCode" Type="Int16" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Acronym" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Addtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsHot" Type="Int16" Nullable="false" />
+          <Property Name="raise" Type="Int16" />
+          <Property Name="enable" Type="Int16" />
+          <Property Name="alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="House_Info">
+          <Key>
+            <PropertyRef Name="HouseId" />
+          </Key>
+          <Property Name="HouseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LandlordName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HouseStatus" Type="Boolean" Nullable="false" />
+          <Property Name="AreaCode" Type="Int32" Nullable="false" />
+          <Property Name="Community" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Building" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="RoomNumber" Type="Int32" Nullable="false" />
+          <Property Name="Toward" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HouseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AreaSize" Type="Int32" Nullable="false" />
+          <Property Name="DegreeOfDecoration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MonthlyRcnt" Type="Double" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteStatus" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RentHouseModelStoreContainer" CdmEntityContainer="RentHouseEntities">
+          <EntitySetMapping Name="User_Info">
+            <EntityTypeMapping TypeName="RentHouseModel.User_Info">
+              <MappingFragment StoreEntitySet="User_Info">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="IDNum" ColumnName="IDNum" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tenants_Info">
+            <EntityTypeMapping TypeName="RentHouseModel.Tenants_Info">
+              <MappingFragment StoreEntitySet="Tenants_Info">
+                <ScalarProperty Name="IDNum" ColumnName="IDNum" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TenantsId" ColumnName="TenantsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Area_Info">
+            <EntityTypeMapping TypeName="RentHouseModel.Area_Info">
+              <MappingFragment StoreEntitySet="Area_Info">
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="enable" ColumnName="enable" />
+                <ScalarProperty Name="raise" ColumnName="raise" />
+                <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+                <ScalarProperty Name="Addtime" ColumnName="Addtime" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
+                <ScalarProperty Name="PinYin" ColumnName="PinYin" />
+                <ScalarProperty Name="ThreeAreaName" ColumnName="ThreeAreaName" />
+                <ScalarProperty Name="TwoAreaName" ColumnName="TwoAreaName" />
+                <ScalarProperty Name="RootName" ColumnName="RootName" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="RootId" ColumnName="RootId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="House_Info">
+            <EntityTypeMapping TypeName="RentHouseModel.House_Info">
+              <MappingFragment StoreEntitySet="House_Info">
+                <ScalarProperty Name="DeleteStatus" ColumnName="DeleteStatus" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="MonthlyRcnt" ColumnName="MonthlyRcnt" />
+                <ScalarProperty Name="DegreeOfDecoration" ColumnName="DegreeOfDecoration" />
+                <ScalarProperty Name="AreaSize" ColumnName="AreaSize" />
+                <ScalarProperty Name="HouseType" ColumnName="HouseType" />
+                <ScalarProperty Name="Toward" ColumnName="Toward" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Community" ColumnName="Community" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="HouseStatus" ColumnName="HouseStatus" />
+                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
+                <ScalarProperty Name="LandlordName" ColumnName="LandlordName" />
+                <ScalarProperty Name="HouseId" ColumnName="HouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

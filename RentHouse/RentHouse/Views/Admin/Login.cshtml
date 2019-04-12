@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="UTF-8" />
+    <title>自屋房屋租赁托管系统</title>
+    <link href="~/Content/xamin/font.css" rel="stylesheet" />
+    <link href="~/Content/xamin/xadmin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/admin/login.js"></script>
+    <script src="~/layui/layui.js"></script>
+    <script src="~/Scripts/xadmin/xadmin.js"></script>
+    <script src="~/Scripts/xadmin/cookie.js"></script>
+</head>
+<body class="login-bg">
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">系统管理员登录</div>
+        <div id="darkbannerwrap"></div>
+
+        <form method="post" class="layui-form">
+            <input name="loginname" placeholder="用户名" type="text" lay-verify="required" class="layui-input login-input">
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input login-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+        </form>
+    </div>
+</body>
+</html>
