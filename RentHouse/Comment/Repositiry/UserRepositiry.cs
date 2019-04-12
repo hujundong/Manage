@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
+using Comment.Data.Infrastructure;
 using Comment.Model;
+using Comment.Model.Query;
 
 namespace Comment.Repositiry
 {
-    public class UserRepositiry
+    public class UserRepositiry : RepositoryBase<UserInfo>, IUserRepositiry
     {
-        public RentHouseEntities db = new RentHouseEntities();
-
-        public User_Info Login(string loginName, string password)
+        public UserRepositiry(IDatabaseFactory databaseFactory)
+           : base(databaseFactory)
         {
-            return db.User_Info.FirstOrDefault(m => (m.LoginName.Equals(loginName) || m.Phone.Equals(loginName)) && m.Password.Equals(password) && m.UserStatus == true && m.UserRole.Equals("NORMAL"));
         }
 
-        public bool Register(User_Info user)
+        public UserInfo Login(string loginName, string password)
+        {
+            return Get(m => (m.LoginName.Equals(loginName) || m.Phone.Equals(loginName)) && m.Password.Equals(password) && m.UserStatus == true && m.UserRole.Equals("NORMAL"));
+        }
+
+        public bool Register(UserInfo user)
         {
             try
             {
-                db.User_Info.Add(user);
-                db.SaveChanges();
+                Add(user);
                 return true;
             }
             catch (Exception ex)
@@ -40,33 +43,18 @@ namespace Comment.Repositiry
         /// <param name="pages">总页数</param>
         /// <param name="count">总数量</param>
         /// <returns></returns>
-        public List<User_Info> GetUserList(User_Info user,int page,int size, out int pages, out int count)
+        public PageData<UserInfo> GetUserList(QueryModel model, string orderby, UserInfo user, int page, int size, bool isdesc = true)
         {
-            count = db.User_Info.Where(m => (string.IsNullOrEmpty(user.UserName) || m.UserName.Contains(user.LoginName))).Count();
-            pages = count % size == 0 ? count / size : count / size + 1;
-            page = page <= 1 ? 1 : page;
-            page = page >= pages && pages > 0 ? pages : page;
-            return db.User_Info.Where(m => (string.IsNullOrEmpty(user.UserName) || m.UserName.Contains(user.LoginName))).OrderBy(m => m.UserId).Skip(size * (page - 1)).Take(size).ToList();
+            return Search(model, orderby, page, size, isdesc);
         }
 
-        public bool EditUser(User_Info user)
+        public bool EditUser(UserInfo user)
         {
             try
             {
-                User_Info user_Info = GetUserById(user.UserId);
-
-                if (user_Info != null)
-                {
-                    user_Info.Phone = user.Phone;
-                    user_Info.UserName = user.UserName;
-                    user_Info.Email = user.Email;
-                    user_Info.Sex = user.Sex;
-                    user_Info.Birthday = user.Birthday;
-                    user_Info.UpdateDate = DateTime.Now;
-                    db.SaveChanges();
-                    return true;
-                }
-                return false;
+                Update(user);
+                UserInfo UserInfo = GetUserById(user.UserId);
+                return true;
             }
             catch (Exception ex)
             {
@@ -74,31 +62,31 @@ namespace Comment.Repositiry
             }
         }
 
-        public User_Info GetUserById(int userId)
+        public UserInfo GetUserById(int userId)
         {
-            return db.User_Info.FirstOrDefault(m => m.UserId == userId);
+            return db.UserInfo.FirstOrDefault(m => m.UserId == userId);
         }
 
         public bool VerifyLoginName(string loginName)
         {
-            return db.User_Info.FirstOrDefault(m => m.LoginName.Equals(loginName)) == null ? true : false;
+            return db.UserInfo.FirstOrDefault(m => m.LoginName.Equals(loginName)) == null ? true : false;
         }
 
         public bool VerifPhone(string phone)
         {
-            return db.User_Info.FirstOrDefault(m => m.Phone.Equals(phone)) == null ? true : false;
+            return db.UserInfo.FirstOrDefault(m => m.Phone.Equals(phone)) == null ? true : false;
         }
 
         public bool VerifPhone(string phone, int userId)
         {
-            return db.User_Info.FirstOrDefault(m => m.Phone.Equals(phone) && m.UserId != userId) == null ? true : false;
+            return db.UserInfo.FirstOrDefault(m => m.Phone.Equals(phone) && m.UserId != userId) == null ? true : false;
         }
 
-        public bool DeleteUser(User_Info user)
+        public bool DeleteUser(UserInfo user)
         {
             try
             {
-                db.User_Info.Remove(user);
+                db.UserInfo.Remove(user);
                 db.SaveChanges();
                 return true;
             }
@@ -110,13 +98,13 @@ namespace Comment.Repositiry
 
         public bool UpdateUserStatus(int userId, bool status)
         {
-            User_Info user_Info = GetUserById(userId);
+            UserInfo UserInfo = GetUserById(userId);
             try
             {
-                if (user_Info != null)
+                if (UserInfo != null)
                 {
-                    user_Info.UserStatus = status;
-                    user_Info.UpdateDate = DateTime.Now;
+                    UserInfo.UserStatus = status;
+                    UserInfo.UpdateDate = DateTime.Now;
                     db.SaveChanges();
                     return true;
                 }
@@ -127,5 +115,16 @@ namespace Comment.Repositiry
                 return false;
             }
         }
+    }
+
+    public interface IUserRepositiry : IRepository<UserInfo>
+    {
+        UserInfo Login(string loginName, string password);
+
+        bool Register(UserInfo user);
+
+        PageData<UserInfo> GetUserList(QueryModel model, string orderby, UserInfo user, int page, int size, bool isdesc = true);
+
+        bool EditUser(UserInfo user);
     }
 }

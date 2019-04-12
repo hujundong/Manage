@@ -34,9 +34,6 @@
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -50,67 +47,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\HouseContext.cs" />
+    <Compile Include="Data\Infrastructure\DatabaseFactory.cs" />
+    <Compile Include="Data\Infrastructure\Disposable.cs" />
+    <Compile Include="Data\Infrastructure\IDatabaseFactory.cs" />
+    <Compile Include="Model\Area_Info.cs" />
+    <Compile Include="Model\House_Info.cs" />
+    <Compile Include="Model\PageData.cs" />
+    <Compile Include="Model\Query\ConditionItem.cs" />
+    <Compile Include="Model\Query\QueryableExtensions.cs" />
+    <Compile Include="Model\Query\QueryableSearcher.cs" />
+    <Compile Include="Model\Query\QueryMethod.cs" />
+    <Compile Include="Model\Query\QueryModel.cs" />
+    <Compile Include="Model\Query\TypeUtil.cs" />
+    <Compile Include="Model\Tenants_Info.cs" />
+    <Compile Include="Model\TransformProviders\InTransformProvider.cs" />
+    <Compile Include="Model\TransformProviders\ITransformProvider.cs" />
+    <Compile Include="Model\TransformProviders\LikeTransformProvider.cs" />
+    <Compile Include="Model\TransformProviders\UnixTime.cs" />
+    <Compile Include="Model\TransformProviders\UnixTimeTransformProvider.cs" />
+    <Compile Include="Model\User_Info.cs" />
     <Compile Include="EnumCode.cs" />
-    <Compile Include="Model\Area_Info.cs">
-      <DependentUpon>RentHouse.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\House_Info.cs">
-      <DependentUpon>RentHouse.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RentHouse.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RentHouse.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RentHouse.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RentHouse.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RentHouse.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RentHouse.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Tenants_Info.cs">
-      <DependentUpon>RentHouse.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\User_Info.cs">
-      <DependentUpon>RentHouse.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositiry\AdminRepositiry.cs" />
     <Compile Include="Repositiry\HouseRepositiry.cs" />
+    <Compile Include="Data\Infrastructure\RepositoryBase.cs" />
     <Compile Include="Repositiry\UserRepositiry.cs" />
     <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\HouseService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="Model\RentHouse.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RentHouse.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Folder Include="Model\SearchModel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Model\RentHouse.edmx.diagram">
-      <DependentUpon>RentHouse.edmx</DependentUpon>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model\RentHouse.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RentHouse.Context.cs</LastGenOutput>
-      <DependentUpon>RentHouse.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model\RentHouse.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RentHouse.edmx</DependentUpon>
-      <LastGenOutput>RentHouse.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
